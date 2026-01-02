@@ -76,9 +76,18 @@ module Github
                .reject { |issue| issue.pull_request || issue.draft }
       end
 
+      ##
+      # Check if a GitHub repository exists
+      #
+      # @param credentials [Hash] GitHub API credentials
+      # @param repository [String] GitHub repository (e.g., 'owner/repo')
+      #
+      # @return [void]
       def github_repository_exist!(credentials, repository)
         octokit = Octokit::Client.new(credentials)
         octokit.repository(repository)
+
+        nil
       end
 
       ##
