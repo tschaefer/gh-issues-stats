@@ -71,7 +71,7 @@ module Github
     # @return [Array<String>] List of unique labels
     def labels
       ensure_issues_loaded(database, refresh, credentials, repository)
-      database.all_labels
+      database.all_labels.sort.reverse
     end
 
     ##
