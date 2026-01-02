@@ -49,17 +49,16 @@ module Github
     # @return [Github::Issues] The initialized issues analyzer
     def initialize(repository, cache: CACHE_DIR, credentials: {}, refresh: 86_400)
       @repository = repository
-      @cache = cache
       @credentials = credentials
       @refresh = refresh
-      @filter = nil
 
       dir = File.join(cache, repository)
       FileUtils.mkdir_p(dir)
+      @cache = dir
 
-      @database = Database.new(File.join(dir, DATABASE_NAME))
-
-      ensure_issues_loaded(database, refresh, credentials, repository)
+      database_path = File.join(dir, DATABASE_NAME)
+      github_repository_exist!(credentials, repository) unless File.exist?(database_path)
+      @database = Database.new(database_path)
 
       at_exit do
         database.close
@@ -71,6 +70,7 @@ module Github
     #
     # @return [Array<String>] List of unique labels
     def labels
+      ensure_issues_loaded(database, refresh, credentials, repository)
       database.all_labels
     end
 
@@ -79,6 +79,7 @@ module Github
     #
     # @return [Array<Hashie::Mash>] List of issues
     def all
+      ensure_issues_loaded(database, refresh, credentials, repository)
       fetch_issues_from_database(database)
     end
 
@@ -89,6 +90,7 @@ module Github
     #
     # @return [Array<Hashie::Mash>] List of filtered issues
     def filtered_by_labels(labels)
+      ensure_issues_loaded(database, refresh, credentials, repository)
       fetch_issues_from_database(database, labels:)
     end
 
@@ -107,6 +109,7 @@ module Github
     #
     # @return [Float] average closing time in seconds
     def average_closing_time_filtered_by_labels(labels)
+      ensure_issues_loaded(database, refresh, credentials, repository)
       list = fetch_issues_from_database(database, labels:)
       return 0 if list.empty?
 
@@ -129,6 +132,7 @@ module Github
     #
     # @return [Float] Median closing time in seconds
     def median_closing_time_filtered_by_labels(labels)
+      ensure_issues_loaded(database, refresh, credentials, repository)
       list = fetch_issues_from_database(database, labels:)
       return 0 if list.empty?
 
@@ -154,6 +158,7 @@ module Github
     #
     # @return [Hashie::Mash] Issues grouped by year with optional statistics
     def per_year_filtered_by_labels(labels, stats: true)
+      ensure_issues_loaded(database, refresh, credentials, repository)
       list = fetch_issues_from_database(database, labels:)
       return if list.empty?
 
@@ -184,6 +189,7 @@ module Github
     #
     # @return [Hashie::Mash] Issues grouped by month with optional statistics
     def per_month_filtered_by_labels(year, labels, stats: true)
+      ensure_issues_loaded(database, refresh, credentials, repository)
       list = fetch_issues_from_database(database, labels:)
       return if list.empty?
 

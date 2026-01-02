@@ -9,6 +9,16 @@ RSpec.describe 'Update Issues Scenario' do # rubocop:disable RSpec/DescribeClass
   before do
     stub_request(
       :get,
+      'https://api.github.com/repos/octodog/bark'
+    )
+      .to_return(
+        status: 200,
+        body: '',
+        headers: {}
+      )
+
+    stub_request(
+      :get,
       'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
     )
       .to_return(

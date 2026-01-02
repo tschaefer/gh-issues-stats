@@ -11,9 +11,18 @@ RSpec.describe Github::Issues do
       before do
         stub_request(
           :get,
-          'https://api.github.com/repos/repo/notfound/issues?direction=desc&per_page=100&sort=created&state=all'
+          'https://api.github.com/repos/repo/notfound'
         )
-          .to_return(status: 404, body: '', headers: {})
+          .to_return(
+            status: 404,
+            body: '',
+            headers: {}
+          )
+        stub_const('Github::Issues::CACHE_DIR', Dir.mktmpdir)
+      end
+
+      after do
+        FileUtils.remove_entry_secure(Github::Issues::CACHE_DIR)
       end
 
       it 'raises an Octokit::NotFound error' do
@@ -26,9 +35,18 @@ RSpec.describe Github::Issues do
       before do
         stub_request(
           :get,
-          'https://api.github.com/repos/repo/forbidden/issues?direction=desc&per_page=100&sort=created&state=all'
+          'https://api.github.com/repos/repo/forbidden'
         )
-          .to_return(status: 403, body: '', headers: {})
+          .to_return(
+            status: 403,
+            body: '',
+            headers: {}
+          )
+        stub_const('Github::Issues::CACHE_DIR', Dir.mktmpdir)
+      end
+
+      after do
+        FileUtils.remove_entry_secure(Github::Issues::CACHE_DIR)
       end
 
       it 'raises an Octokit::Forbidden error' do
@@ -41,9 +59,23 @@ RSpec.describe Github::Issues do
       before do
         stub_request(
           :get,
+          'https://api.github.com/repos/repo/existing'
+        )
+          .to_return(
+            status: 200,
+            body: '',
+            headers: {}
+          )
+
+        stub_request(
+          :get,
           'https://api.github.com/repos/repo/existing/issues?direction=desc&per_page=100&sort=created&state=all'
         )
-          .to_return(status: 200, body: '[]', headers: { 'Content-Type' => 'application/json' })
+          .to_return(
+            status: 200,
+            body: '[]',
+            headers: { 'Content-Type' => 'application/json' }
+          )
         stub_const('Github::Issues::CACHE_DIR', Dir.mktmpdir)
       end
 
@@ -66,6 +98,15 @@ RSpec.describe Github::Issues do
     let(:labels) { ['bug', 'enhancement', 'help wanted', 'urgent'] }
 
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
@@ -104,6 +145,16 @@ RSpec.describe Github::Issues do
     before do
       stub_request(
         :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
+      stub_request(
+        :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
       )
         .to_return(
@@ -131,6 +182,16 @@ RSpec.describe Github::Issues do
 
   describe '.filtered_by_labels' do
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
@@ -187,6 +248,16 @@ RSpec.describe Github::Issues do
     before do
       stub_request(
         :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
+      stub_request(
+        :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
       )
         .to_return(
@@ -209,6 +280,16 @@ RSpec.describe Github::Issues do
 
   describe 'avverage_closing_time_filtered_by_labels' do
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
@@ -236,6 +317,16 @@ RSpec.describe Github::Issues do
     before do
       stub_request(
         :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
+      stub_request(
+        :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
       )
         .to_return(
@@ -258,6 +349,16 @@ RSpec.describe Github::Issues do
 
   describe 'median_closing_time_filtered_by_labels' do
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
@@ -283,6 +384,16 @@ RSpec.describe Github::Issues do
 
   describe 'per_year' do
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
@@ -328,6 +439,16 @@ RSpec.describe Github::Issues do
     before do
       stub_request(
         :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
+      stub_request(
+        :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
       )
         .to_return(
@@ -350,6 +471,16 @@ RSpec.describe Github::Issues do
 
   describe '.per_month' do
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'
@@ -393,6 +524,16 @@ RSpec.describe Github::Issues do
 
   describe '.per_month_filtered_by_labels' do
     before do
+      stub_request(
+        :get,
+        'https://api.github.com/repos/octodog/bark'
+      )
+        .to_return(
+          status: 200,
+          body: '',
+          headers: {}
+        )
+
       stub_request(
         :get,
         'https://api.github.com/repos/octodog/bark/issues?direction=desc&per_page=100&sort=created&state=all'

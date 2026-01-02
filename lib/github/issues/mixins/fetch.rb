@@ -76,6 +76,11 @@ module Github
                .reject { |issue| issue.pull_request || issue.draft }
       end
 
+      def github_repository_exist!(credentials, repository)
+        octokit = Octokit::Client.new(credentials)
+        octokit.repository(repository)
+      end
+
       ##
       # Fetch issues from the database applying the given labels filter
       #
