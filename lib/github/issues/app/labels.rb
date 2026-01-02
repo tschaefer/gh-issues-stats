@@ -15,7 +15,8 @@ module Github
         parameter 'REPOSITORY', 'the repository to analyze', required: true
 
         def execute
-          labels = exec_run(@repository, @cfgfile, @cachepath, @refresh).labels
+          run = exec_run(@repository, @cfgfile, @cachepath, @refresh)
+          labels = exec_load(run, :labels, [])
           rows = []
           labels.each_slice(TABLE_COLUMNS) do |slice|
             (TABLE_COLUMNS - slice.size).times { slice << '' } if slice.size < TABLE_COLUMNS

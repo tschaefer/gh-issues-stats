@@ -2,6 +2,7 @@
 
 require 'pastel'
 require 'tty-pager'
+require 'tty-spinner'
 
 require 'github/issues'
 
@@ -52,6 +53,25 @@ module Github
           exec_bailout("Repository '#{repository}' not found.")
         rescue StandardError => e
           exec_bailout(e.message)
+        end
+
+        ##
+        # Execute the specified method on the GitHub Issues instance with a
+        # loading spinner
+        #
+        # @param run [Github::Issues] GitHub Issues instance
+        # @param method [Symbol] Method to call on the instance
+        # @param args [Array] Arguments to pass to the method
+        #
+        # @return [Object] Result of the method call
+        def exec_load(run, method, args)
+          results = nil
+          spinner = TTY::Spinner.new(':spinner Fetching data ...', format: :dots, clear: true)
+          spinner.run("Done.\n") do
+            results = run.send(method, *args)
+          end
+
+          results
         end
 
         def exec_output(issues, extra: nil)
