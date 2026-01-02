@@ -57,6 +57,7 @@ module Github
       # @return [Hashie::Mash] Merged group of issues
       def group_merge(created, closed, finished)
         keys = created.keys | closed.keys | finished.keys
+        keys.sort!.reverse!
 
         keys.each_with_object({}) do |key, hash|
           hash[key] = {
