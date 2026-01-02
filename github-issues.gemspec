@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'pastel', '~> 0.8.0'
   spec.add_dependency 'sqlite3', '~> 2.9.0'
   spec.add_dependency 'tty-pager', '~> 0.14.0'
+  spec.add_dependency 'tty-spinner', '~> 0.9.3'
   spec.add_dependency 'tty-table', '~> 0.12.0'
   spec.add_dependency 'unicode_plot', '~> 0.0.5'
 end

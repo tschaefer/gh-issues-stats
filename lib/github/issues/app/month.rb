@@ -8,7 +8,9 @@ module Github
       ##
       # Command to show issues created per month in a given year
       class MonthCommand < BaseCommand
-        parameter 'YEAR', 'the year to filter by', required: true
+        parameter 'YEAR', 'the year to filter by', required: true do |value|
+          Integer(value)
+        end
         parameter 'REPOSITORY', 'the repository to analyze', required: true
         option '--label', 'LABEL', 'filter by label', multivalued: true
         option '--[no-]finished', :flag, 'show finished stats.', default: false
@@ -19,7 +21,8 @@ module Github
         def execute
           labels = @label_list || []
           run = exec_run(@repository, @cfgfile, @cachepath, @refresh)
-          issues = run.per_month_filtered_by_labels(@year.to_i, labels)
+          issues = exec_load(run, :per_month_filtered_by_labels, [year, labels])
+
           return exec_bailout('No issues found.') if issues.nil? || issues.empty?
 
           exec_output(issues)

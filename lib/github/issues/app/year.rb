@@ -18,7 +18,8 @@ module Github
         def execute
           labels = @label_list || []
           run = exec_run(@repository, @cfgfile, @cachepath, @refresh)
-          issues = run.per_year_filtered_by_labels(labels)
+          issues = exec_load(run, :per_year_filtered_by_labels, [labels])
+
           return exec_bailout('No issues found.') if issues.nil? || issues.empty?
 
           average = stats_seconds_to_days(run.all_average_closing_time)
