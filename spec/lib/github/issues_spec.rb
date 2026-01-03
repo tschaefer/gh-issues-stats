@@ -3,8 +3,6 @@
 require 'time'
 require 'fileutils'
 
-require 'github/issues'
-
 RSpec.describe Github::Issues do
   describe '.new' do
     context 'when repository does not exist' do

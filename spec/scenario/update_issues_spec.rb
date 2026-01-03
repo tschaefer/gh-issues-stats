@@ -3,8 +3,6 @@
 require 'fileutils'
 require 'time'
 
-require 'github/issues'
-
 RSpec.describe 'Update Issues Scenario' do # rubocop:disable RSpec/DescribeClass
   before do
     stub_request(

@@ -17,6 +17,10 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'webmock/rspec'
 
+require 'github-issues'
+# bundle exec rake rspec requires implicit loading of the class
+require 'github/issues'
+
 if %w[true 1].include?(ENV.fetch('COVERAGE', 'false').downcase)
   require 'simplecov'
   SimpleCov.start do
