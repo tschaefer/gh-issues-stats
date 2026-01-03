@@ -2,15 +2,6 @@
 
 require 'clamp'
 
-require 'github/issues/version'
-
-require 'github/issues/app/mixins/exec'
-require 'github/issues/app/mixins/chart'
-require 'github/issues/app/mixins/legend'
-require 'github/issues/app/mixins/options'
-require 'github/issues/app/mixins/statistics'
-require 'github/issues/app/mixins/table'
-
 module Github
   class Issues
     module App
@@ -19,7 +10,7 @@ module Github
       #
       # Inherits from Clamp::Command and includes mixins and is inherited by
       # the specific command classes
-      class BaseCommand < Clamp::Command
+      class Base < Clamp::Command
         include Github::Issues::App::Chart
         include Github::Issues::App::Exec
         include Github::Issues::App::Legend

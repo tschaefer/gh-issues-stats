@@ -37,4 +37,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'tty-spinner', '~> 0.9.3'
   spec.add_dependency 'tty-table', '~> 0.12.0'
   spec.add_dependency 'unicode_plot', '~> 0.0.5'
+  spec.add_dependency 'zeitwerk', '~> 2.7.1'
 end

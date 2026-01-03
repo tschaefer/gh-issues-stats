@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'github/issues/app/base'
-
 module Github
   class Issues
     module App
       ##
       # Command to show issues created per month in a given year
-      class MonthCommand < BaseCommand
+      class Month < Base
         parameter 'YEAR', 'the year to filter by', required: true do |value|
           Integer(value)
         end

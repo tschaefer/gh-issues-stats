@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'github/issues/app/base'
-
 module Github
   class Issues
     module App
       ##
       # Command to show issue stats per year
-      class YearCommand < BaseCommand
+      class Year < Base
         parameter 'REPOSITORY', 'the repository to analyze', required: true
         option '--label', 'LABEL', 'filter by label', multivalued: true
         option '--[no-]finished', :flag, 'show finished stats.', default: false

@@ -3,11 +3,6 @@
 require 'fileutils'
 require 'hashie'
 
-require 'github/issues/database'
-require 'github/issues/mixins/statistics'
-require 'github/issues/mixins/fetch'
-require 'github/issues/mixins/group'
-
 module Github
   ##
   # Main class for analyzing GitHub issues

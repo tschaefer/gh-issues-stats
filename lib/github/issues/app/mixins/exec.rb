@@ -4,8 +4,6 @@ require 'pastel'
 require 'tty-pager'
 require 'tty-spinner'
 
-require 'github/issues'
-
 module Github
   class Issues
     module App

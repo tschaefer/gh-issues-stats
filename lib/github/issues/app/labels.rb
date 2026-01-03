@@ -2,14 +2,12 @@
 
 require 'tty-table'
 
-require 'github/issues/app/base'
-
 module Github
   class Issues
     module App
       ##
       # Command to list labels in a repository
-      class LabelsCommand < BaseCommand
+      class Labels < Base
         TABLE_COLUMNS = 3
 
         parameter 'REPOSITORY', 'the repository to analyze', required: true

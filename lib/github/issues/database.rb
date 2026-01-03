@@ -4,10 +4,6 @@ require 'sqlite3'
 require 'json'
 require 'time'
 
-require 'github/issues/mixins/database/marshal'
-require 'github/issues/mixins/database/schema'
-require 'github/issues/mixins/database/store'
-
 module Github
   class Issues
     ##

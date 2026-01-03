@@ -28,6 +28,10 @@ Metrics/MethodLength:
     - 'heredoc'
   Max: 50
 
+Naming/FileName:
+  Exclude:
+    - 'lib/github-issues.rb'
+
 RSpec/ExampleLength:
   CountAsOne:
     - 'array'
