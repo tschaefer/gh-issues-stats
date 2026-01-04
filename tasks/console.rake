@@ -26,7 +26,9 @@ task :console do
   require 'pry'
   require 'pry-byebug'
   require 'pry-doc'
-  require 'github/issues'
+  require 'github-issues'
+
+  reload!(print: false)
 
   ARGV.clear
 
