@@ -10,11 +10,11 @@ module Github
           Integer(value)
         end
         parameter 'REPOSITORY', 'the repository to analyze', required: true
+        option '--format', 'FORMAT', 'specify output format (table, chart, json).', default: 'table'
         option '--label', 'LABEL', 'filter by label', multivalued: true
         option '--[no-]finished', :flag, 'show finished stats.', default: false
         option '--[no-]legend', :flag, 'do not print a legend.', default: true
         option '--[no-]pager', :flag, 'do not pipe output into a pager.', default: false
-        option '--[no-]chart', :flag, 'show bar chart instead of table.', default: false
 
         def execute
           labels = @label_list || []
@@ -23,7 +23,7 @@ module Github
 
           return exec_bailout('No issues found.') if issues.nil? || issues.empty?
 
-          exec_output(issues)
+          exec_output(issues, format)
         end
       end
     end

@@ -7,11 +7,11 @@ module Github
       # Command to show issue stats per year
       class Year < Base
         parameter 'REPOSITORY', 'the repository to analyze', required: true
+        option '--format', 'FORMAT', 'specify output format (table, chart, json).', default: 'table'
         option '--label', 'LABEL', 'filter by label', multivalued: true
         option '--[no-]finished', :flag, 'show finished stats.', default: false
         option '--[no-]legend', :flag, 'do not print a legend.', default: true
         option '--[no-]pager', :flag, 'do not pipe output into a pager.', default: false
-        option '--[no-]chart', :flag, 'show bar chart instead of table.', default: false
 
         def execute
           labels = @label_list || []
@@ -24,7 +24,7 @@ module Github
           median  = stats_seconds_to_days(run.all_median_closing_time)
           extra   = "#{average} days average closing time. #{median} days median closing time."
 
-          exec_output(issues, extra:)
+          exec_output(issues, format, extra:)
         end
       end
     end

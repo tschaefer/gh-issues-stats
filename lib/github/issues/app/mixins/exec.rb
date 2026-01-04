@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'json'
 require 'pastel'
 require 'tty-pager'
 require 'tty-spinner'
@@ -61,8 +62,21 @@ module Github
           results
         end
 
-        def exec_output(issues, extra: nil)
-          content = chart? ? chart_create(issues) : table_create(issues, finished?)
+        ##
+        # Generate and display the output based on the specified format
+        #
+        # @param issues [Hashie::Mash] List of issues to display
+        # @param format [String] Output format ('table', 'chart', 'json')
+        # @param extra [Hash, nil] Extra information for the legend
+        #
+        # @return [void]
+        def exec_output(issues, format, extra: nil)
+          content = case format
+                    when 'table' then table_create(issues, finished?)
+                    when 'chart' then chart_create(issues)
+                    when 'json'  then return puts JSON.pretty_generate(issues)
+                    else exec_bailout("Unsupported output format: #{format}")
+                    end
           legend = legend_create(issues, legend?, extra:)
 
           TTY::Pager.new(enabled: pager?).page("#{content}#{legend}")

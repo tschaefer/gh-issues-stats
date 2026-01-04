@@ -61,11 +61,11 @@ github-issues yearly rails/rails
 ```
 
 Options:
+- `--format FORMAT`- Specify output format (table, chart, json). (default: table)
 - `--label LABEL` - Filter by specific label (can be used multiple times; prefix with `!` to exclude)
 - `--[no-]finished` - Show finished stats (default: false)
 - `--[no-]legend` - Toggle legend display (default: true)
 - `--[no-]pager` - Toggle output paging (default: false)
-- `--[no-]chart` - Show bar chart instead of table (default: false)
 
 #### View Issues by Month
 
@@ -103,17 +103,17 @@ github-issues labels owner/repository
 
 Filter issues by multiple labels:
 ```bash
-github-issues yearly rails/rails --label bug --label '!enhancement'
+github-issues yearly --label bug --label '!enhancement' rails/rails
 ```
 
 Show monthly breakdown with chart visualization:
 ```bash
-github-issues monthly 2023 rails/rails --chart
+github-issues monthly --format chart 2023 rails/rails
 ```
 
 Use with custom refresh interval:
 ```bash
-github-issues yearly rails/rails --refresh 2hours
+github-issues --refresh 2hours yearly rails/rails
 ```
 
 ## Configuration
