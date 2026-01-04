@@ -79,6 +79,10 @@ module Github
           )
         end
 
+        ##
+        # Create the created/closed ratio barplot
+        #
+        # @return [UnicodePlot::Barplot] Created/Closed ratio barplot
         def chart_plot_created_closed_ratio(data)
           UnicodePlot.barplot(
             data.labels,
