@@ -58,6 +58,17 @@ module Github
         rescue JSON::ParserError
           raise "Failed to parse configuration file '#{file}'"
         end
+
+        ##
+        # Parse cache path option and returns the specified path or
+        # a default cache path
+        #
+        # @param path [String, nil] Path to cache directory
+        #
+        # @return [String] Cache directory path
+        def options_parse_cache_path(path)
+          path || File.join(Dir.home, '.cache', 'github-issues')
+        end
       end
     end
   end

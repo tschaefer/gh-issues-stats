@@ -30,23 +30,12 @@ module Github
         #
         # @return [Github::Issues] Initialized GitHub Issues instance
         def exec_run(repository, config_file, cache_path, refresh_interval)
-          credentials = options_parse_configuration(config_file)
-          refresh_seconds = options_parse_refresh_interval(refresh_interval)
-          if cache_path.nil? || cache_path.empty?
-            Github::Issues.new(
-              repository,
-              credentials:,
-              refresh:
-              refresh_seconds
-            )
-          else
-            Github::Issues.new(
-              repository,
-              credentials:,
-              cache: cache_path,
-              refresh: refresh_seconds
-            )
-          end
+          Github::Issues.new(
+            repository,
+            credentials: options_parse_configuration(config_file),
+            refresh: options_parse_refresh_interval(refresh_interval),
+            cache: options_parse_cache_path(cache_path)
+          )
         rescue Octokit::NotFound
           exec_bailout("Repository '#{repository}' not found.")
         rescue StandardError => e
