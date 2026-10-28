@@ -29,10 +29,10 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'clamp', '>= 1.3.2', '< 1.6.0'
   spec.add_dependency 'faraday-retry', '~> 2.4.0'
-  spec.add_dependency 'hashie', '~> 5.1.0'
+  spec.add_dependency 'hashie', '>= 5.1', '< 5.3'
   spec.add_dependency 'octokit', '~> 10.0.0'
   spec.add_dependency 'pastel', '~> 0.8.0'
-  spec.add_dependency 'sqlite3', '~> 2.9.0'
+  spec.add_dependency 'sqlite3', '>= 2.9', '< 2.11'
   spec.add_dependency 'tty-pager', '~> 0.14.0'
   spec.add_dependency 'tty-spinner', '~> 0.9.3'
   spec.add_dependency 'tty-table', '~> 0.12.0'
